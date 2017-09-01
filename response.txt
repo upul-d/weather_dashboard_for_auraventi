@@ -1,0 +1,1 @@
+{"forecasts":[{"timeStamp":1504274400,"timeGMT":"2:00 PM 9/1/17","forecast":59.23},{"timeStamp":1504276200,"timeGMT":"2:30 PM 9/1/17","forecast":59.46},{"timeStamp":1504278000,"timeGMT":"3:00 PM 9/1/17","forecast":59.69},{"timeStamp":1504279800,"timeGMT":"3:30 PM 9/1/17","forecast":59.65}],"predictionType":"temperature","location":"findhorn"}

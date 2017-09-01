@@ -15,9 +15,13 @@ class Request
       request['Authorization'] = "Basic dXB1bDota0FHYyNjWCZkdFRYWnR1JQ=="
 
       res = http.request(request)
-      puts res.code
-      puts res.body if res.is_a?(Net::HTTPSuccess)
-      return res.body
+      # puts res.code
+      resBody = res.body if res.is_a?(Net::HTTPSuccess)
+
+      open('response.txt', 'w') do |f|
+        f.puts resBody
+      end
+      # return res.body
     end
   end
 
