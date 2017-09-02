@@ -21,4 +21,8 @@ class ForecastGeneratedAtTest < Minitest::Test
     assert_equal(1, @forecast_generated_at.location_id)
   end
 
+  def test_forecast_generated_at_weather_variable_id
+    assert_equal(2, @forecast_generated_at.weather_variable_id)
+  end
+
 end
