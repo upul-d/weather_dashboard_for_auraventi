@@ -13,4 +13,8 @@ class ForecastTest < Minitest::Test
     assert_equal(2, @forecast.id)
   end
 
+  def test_forecast_FGA_id
+    assert_equal(4, @forecast.FGA_id)
+  end
+
 end
