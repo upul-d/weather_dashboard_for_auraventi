@@ -1,10 +1,10 @@
 require 'net/http'
 
 class Request  
-  def getBody(predictionType, location, queryParms)
-    uri = URI("https://api.auraventi.com/forecast/weather/#{predictionType}/#{location}")
-    if(queryParms!= nil)
-      uri.query = URI.encode_www_form(queryParms)
+  def getBody(weatherVariable, location, queryParams)
+    uri = URI("https://api.auraventi.com/forecast/weather/#{weatherVariable}/#{location}")
+    if(queryParams!= nil)
+      uri.query = URI.encode_www_form(queryParams)
     end
 
     # Creates a new http object
