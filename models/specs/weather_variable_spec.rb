@@ -9,11 +9,11 @@ class WeatherVariableTest < Minitest::Test
     @weather_variable = WeatherVariable.new(test_weather_variable)
   end
 
-  def test_location_name
+  def test_weather_variable_name
     assert_equal("humidity", @weather_variable.name)
   end
 
-  def test_location_id
+  def test_weather_variable_id
     assert_equal(6, @weather_variable.id)
   end
 
