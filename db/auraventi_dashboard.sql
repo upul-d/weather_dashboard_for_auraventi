@@ -15,15 +15,15 @@ CREATE TABLE weather_variables (
 
 CREATE TABLE forecasts_generated_at; (
   id SERIAL8 PRIMARY KEY,
-  -- timestamp data type??,
+  time_stamp bigint,
   location_id INT8 REFERENCES locations(id),
   weather_variable_id INT8 REFERENCES weather_variables(id)
 );
 
 CREATE TABLE forecasts; (
   id SERIAL8 PRIMARY KEY,
-  FGA_id REFERENCES forecasts_generated_at(id),
-  -- timestamp data type?,
-  -- timeGMT data type?,
+  FGA_id INT8 REFERENCES forecasts_generated_at(id),
+  time_stamp bigint,
+  timeGMT VARCHAR(255),
   value INT8
 );
