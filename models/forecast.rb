@@ -12,4 +12,10 @@ attr_reader :id, :FGA_id, :time_stamp, :time_GMT, :value
     @value = options["value"].to_i if options["value"]
   end
 
+  def save()
+    sql = "INSERT INTO forecasts (FGA_id, time_stamp, time_GMT, value) VALUES (#{@FGA_id}, #{@time_stamp}, #{@time_GMT}, #{@value}) RETURNING id"
+    forecast = SqlRunner.run(sql).first
+    @id = forecast["id"].to_i
+  end
+
 end
