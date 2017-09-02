@@ -24,6 +24,6 @@ CREATE TABLE forecasts; (
   id SERIAL8 PRIMARY KEY,
   FGA_id INT8 REFERENCES forecasts_generated_at(id),
   time_stamp bigint,
-  timeGMT VARCHAR(255),
+  time_GMT VARCHAR(255),
   value INT8
 );
