@@ -17,4 +17,8 @@ class ForecastTest < Minitest::Test
     assert_equal(4, @forecast.FGA_id)
   end
 
+  def test_forecast_time_stamp
+    assert_equal(1504382072, @forecast.time_stamp)
+  end
+
 end
