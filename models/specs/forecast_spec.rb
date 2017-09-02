@@ -25,4 +25,8 @@ class ForecastTest < Minitest::Test
     assert_equal("9:00 PM 9/2/17", @forecast.time_GMT)
   end
 
+  def test_forecast_value
+    assert_equal(77, @forecast.value)
+  end
+
 end
