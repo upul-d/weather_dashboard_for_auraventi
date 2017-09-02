@@ -13,4 +13,8 @@ class LocationTest < Minitest::Test
     assert_equal("Edinburgh", @location.name)
   end
 
+  def test_location_id
+    assert_equal(8, @location.id)
+  end
+
 end
