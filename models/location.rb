@@ -9,4 +9,10 @@ attr_reader :id, :name
     @name = options["name"]
   end
 
+  def save()
+    sql = "INSERT INTO locations (name) VALUES ('#{@name}') RETURNING id"
+    location = SqlRunner.run(sql).first
+    @id = location["id"].to_i
+  end
+
 end
