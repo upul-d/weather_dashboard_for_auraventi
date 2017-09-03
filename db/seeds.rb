@@ -1,6 +1,7 @@
 require_relative("../models/location")
 require_relative("../models/weather_variable")
 require_relative("../models/forecast_generated_at")
+require_relative("../models/forecast")
 
 location1 = Location.new({
   "name" => "Findhorn"
@@ -39,3 +40,19 @@ forecast_generated_at2 = ForecastGeneratedAt.new({
 forecast_generated_at1.save()
 forecast_generated_at2.save()
 
+forecast1 = Forecast.new({
+  "FGA_id" => forecast_generated_at1.id,
+  "time_stamp" => 1504393385,
+  "time_GMT" => "10:00 AM 9/3/17",
+  "value" => 12.991234
+  })
+
+forecast2 = Forecast.new({
+  "FGA_id" => forecast_generated_at2.id,
+  "time_stamp" => 1504393400,
+  "time_GMT" => "11:00 AM 9/3/17",
+  "value" => 0.123
+  })
+
+forecast1.save()
+forecast2.save()
