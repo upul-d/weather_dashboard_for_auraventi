@@ -13,12 +13,13 @@ class Run
 
   def processForecast(location, weatherVariable)
     responseBodyJSON = Request.new().getBody(weatherVariable, location, nil)
+    parsedResponseBody = JSON.parse(responseBodyJSON.to_s)
     
     # 4 methods to be written for writing to DB
-    writeLocation(responseBodyJSON)
-    writeWeatherVariable(responseBodyJSON)
-    writeFGA(responseBodyJSON)
-    writeForecasts(responseBodyJSON)
+    writeLocation(parsedResponseBody)
+    writeWeatherVariable(parsedResponseBody)
+    writeFGA(parsedResponseBody)
+    writeForecasts(parsedResponseBody)
   end
 end
 # Run.new().main()
