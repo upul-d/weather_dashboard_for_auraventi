@@ -25,5 +25,5 @@ CREATE TABLE forecasts (
   FGA_id INT8 REFERENCES forecasts_generated_at(id),
   time_stamp bigint,
   time_GMT VARCHAR(255),
-  value INT8
+  value double precision
 );
