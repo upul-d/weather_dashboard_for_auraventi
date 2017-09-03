@@ -6,7 +6,19 @@ require_relative("models/forecast")
 require "rubygems"
 require "json"
 
-responseBody = Request.new().getBody("cloudcover", "findhorn", {:length => 3});
-#to do above - change queryParams to nil
+class Run
+  def main()
+    # will call processForecast x6 (for each of the weatherVariables)
+  end
 
-puts "responseBody: " + responseBody
+  def processForecast(location, weatherVariable)
+    responseBodyJSON = Request.new().getBody(weatherVariable, location, nil)
+    
+    # 4 methods to be written for writing to DB
+    writeLocation(responseBodyJSON)
+    writeWeatherVariable(responseBodyJSON)
+    writeFGA(responseBodyJSON)
+    writeForecasts(responseBodyJSON)
+  end
+end
+# Run.new().main()
