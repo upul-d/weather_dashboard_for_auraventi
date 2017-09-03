@@ -4,18 +4,23 @@ class Forecast
 
 attr_reader :id, :FGA_id, :time_stamp, :time_GMT, :value
 
-  def initialize(options)
-    @id = options["id"].to_i if options["id"]
-    @FGA_id = options["FGA_id"].to_i if options["FGA_id"]
-    @time_stamp = options["time_stamp"].to_i if options["time_stamp"]
-    @time_GMT = options["time_GMT"]
-    @value = options["value"]
+  def initialize(forecast_hash)
+    @id = forecast_hash["id"].to_i if forecast_hash["id"]
+    @FGA_id = forecast_hash["FGA_id"].to_i if forecast_hash["FGA_id"]
+    @time_stamp = forecast_hash["time_stamp"].to_i if forecast_hash["time_stamp"]
+    @time_GMT = forecast_hash["time_GMT"]
+    @value = forecast_hash["value"]
   end
 
   def save()
-    sql = "INSERT INTO forecasts (FGA_id, time_stamp, time_GMT, value) VALUES (#{@FGA_id}, #{@time_stamp}, '#{@time_GMT}', #{@value}) RETURNING id"
-    forecast = SqlRunner.run(sql).first
-    @id = forecast["id"].to_i
+    sql = "SELECT id, FGA_id, time_stamp, time_GMT, value from forecasts WHERE (FGA_id=#{@FGA_id} AND time_stamp=#{@time_stamp} AND time_GMT='#{@time_GMT}' AND value=#{@value})"
+    existingForecastHash = SqlRunner.run(sql).first
+    if(existingForecastHash == nil)
+      sql = "INSERT INTO forecasts (FGA_id, time_stamp, time_GMT, value) VALUES (#{@FGA_id}, #{@time_stamp}, '#{@time_GMT}', #{@value}) RETURNING id"
+      forecast = SqlRunner.run(sql).first
+      @id = forecast["id"].to_i
+    else
+      @id = existingForecastHash["id"].to_i
+    end
   end
-
 end
