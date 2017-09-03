@@ -4,15 +4,20 @@ class WeatherVariable
 
 attr_reader :id, :name
 
-  def initialize(options)
-    @id = options["id"].to_i if options["id"]
-    @name = options["name"]
+  def initialize(weather_variable_hash)
+    @id = weather_variable_hash["id"].to_i if weather_variable_hash["id"]
+    @name = weather_variable_hash["name"]
   end
 
   def save()
-    sql = "INSERT INTO weather_variables (name) VALUES ('#{@name}') RETURNING id"
-    weather_variable = SqlRunner.run(sql).first
-    @id = weather_variable["id"].to_i
+    sql = "SELECT id, name from weather_variables WHERE name='#{@name}'"
+    existingWeatherVariableHash = SqlRunner.run(sql).first
+    if(existingWeatherVariableHash == nil)
+      sql = "INSERT INTO weather_variables (name) VALUES ('#{@name}') RETURNING id"
+      weather_variable = SqlRunner.run(sql).first
+      @id = weather_variable["id"].to_i
+    else
+      @id = existingWeatherVariableHash["id"].to_i
+    end
   end
-
 end
