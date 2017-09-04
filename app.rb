@@ -11,15 +11,17 @@ class Run
     @responseLocation = nil
     @responseWeatherVariable = nil
     @responseFGA = nil
-    # @forecastsFromResponse = []
+    @forecastsFromResponse = []
     main()
   end
 
   def main()
-    # yet to call processForecast for the 3 remaining weatherVariables
     processForecast("findhorn", "humidity")
     processForecast("findhorn", "temperature")
     processForecast("findhorn", "cloudcover")
+    processForecast("findhorn", "windspeed")
+    processForecast("findhorn", "precipintensity")
+    processForecast("findhorn", "precipprobability")
   end
 
   def processForecast(location, weatherVariable)
@@ -28,9 +30,8 @@ class Run
     
     writeLocation(parsedResponseBody)
     writeWeatherVariable(parsedResponseBody)
-    # 1 more DB write method needed
     writeForecastGeneratedAt(parsedResponseBody)
-    # writeForecasts(parsedResponseBody)
+    writeForecasts(parsedResponseBody)
   end
 
   def writeLocation(parsedResponseBody)
@@ -57,6 +58,22 @@ class Run
       })
     responseFGA.save()
     @responseFGA = responseFGA
+  end
+
+  def writeForecasts(parsedResponseBody)
+    puts("writeForecasts #{@responseFGA}")
+    forecastsArray = parsedResponseBody["forecasts"]
+
+    forecastsArray.each{ |forecast|
+      forecastFromResponse = Forecast.new({
+        "FGA_id" => @responseFGA.id,
+        "time_stamp" => forecast["timeStamp"].to_i,
+        "time_GMT" => forecast["timeGMT"],
+        "value" => forecast["forecast"].to_f
+        })
+      forecastFromResponse.save()
+      @forecastsFromResponse.push(forecastFromResponse)
+    }
   end
 end
 
