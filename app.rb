@@ -7,10 +7,19 @@ require "rubygems"
 require "json"
 
 class Run
+  def initialize()
+    @responseLocation = nil
+    @responseWeatherVariable = nil
+    @responseFGA = nil
+    # @forecastsFromResponse = []
+    main()
+  end
+
   def main()
-    # yet to call processForecast for the 4 remaining weatherVariables
+    # yet to call processForecast for the 3 remaining weatherVariables
     processForecast("findhorn", "humidity")
     processForecast("findhorn", "temperature")
+    processForecast("findhorn", "cloudcover")
   end
 
   def processForecast(location, weatherVariable)
@@ -19,8 +28,8 @@ class Run
     
     writeLocation(parsedResponseBody)
     writeWeatherVariable(parsedResponseBody)
-    # 2 more DB write methods needed
-    # writeFGA(parsedResponseBody)
+    # 1 more DB write method needed
+    writeForecastGeneratedAt(parsedResponseBody)
     # writeForecasts(parsedResponseBody)
   end
 
@@ -29,6 +38,7 @@ class Run
       "name" => "#{parsedResponseBody["location"]}"
       })
     responseLocation.save()
+    @responseLocation = responseLocation
   end
 
   def writeWeatherVariable(parsedResponseBody)
@@ -36,7 +46,18 @@ class Run
       "name" => "#{parsedResponseBody["predictionType"]}"
       })
     responseWeatherVariable.save()
+    @responseWeatherVariable = responseWeatherVariable
+  end
+
+  def writeForecastGeneratedAt(parsedResponseBody)
+    responseFGA = ForecastGeneratedAt.new({
+      "time_stamp" => Time.now.hour.to_i,
+      "location_id" => @responseLocation.id,
+      "weather_variable_id" => @responseWeatherVariable.id
+      })
+    responseFGA.save()
+    @responseFGA = responseFGA
   end
 end
 
-Run.new().main()
+Run.new()
