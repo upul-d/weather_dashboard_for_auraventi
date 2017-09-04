@@ -8,18 +8,27 @@ require "json"
 
 class Run
   def main()
-    # will call processForecast x6 (for each of the weatherVariables)
+    # yet to call processForecast for the 5 remaining weatherVariables
+    processForecast("findhorn", "humidity")
   end
 
   def processForecast(location, weatherVariable)
     responseBodyJSON = Request.new().getBody(weatherVariable, location, nil)
     parsedResponseBody = JSON.parse(responseBodyJSON.to_s)
     
-    # 4 methods to be written for writing to DB
     writeLocation(parsedResponseBody)
-    writeWeatherVariable(parsedResponseBody)
-    writeFGA(parsedResponseBody)
-    writeForecasts(parsedResponseBody)
+    # 3 more DB write methods needed
+    # writeWeatherVariable(parsedResponseBody)
+    # writeFGA(parsedResponseBody)
+    # writeForecasts(parsedResponseBody)
+  end
+
+  def writeLocation(parsedResponseBody)
+    responseLocation = Location.new({
+      "name" => "#{parsedResponseBody["location"]}"
+      })
+    responseLocation.save()
   end
 end
-# Run.new().main()
+
+Run.new().main()
