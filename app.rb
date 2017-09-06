@@ -11,7 +11,6 @@ class Run
     @responseLocation = nil
     @responseWeatherVariable = nil
     @responseFGA = nil
-    @forecastsFromResponse = []
     main()
   end
 
@@ -61,7 +60,6 @@ class Run
   end
 
   def writeForecasts(parsedResponseBody)
-    puts("writeForecasts #{@responseFGA}")
     forecastsArray = parsedResponseBody["forecasts"]
 
     forecastsArray.each{ |forecast|
@@ -72,7 +70,6 @@ class Run
         "value" => forecast["forecast"].to_f
         })
       forecastFromResponse.save()
-      @forecastsFromResponse.push(forecastFromResponse)
     }
   end
 end
