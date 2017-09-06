@@ -20,4 +20,10 @@ attr_reader :id, :name
       @id = existingWeatherVariableHash["id"].to_i
     end
   end
+
+  def self.find(weatherVariableName)
+    sql = "SELECT * from weather_variables WHERE name='#{weatherVariableName}'"
+    weatherVariableHash = SqlRunner.run(sql).first
+    return weatherVariableHash
+  end
 end
