@@ -1,8 +1,9 @@
 require_relative("../db/sql_runner")
+require 'json'
 
 class Forecast
 
-attr_reader :id, :FGA_id, :time_stamp, :time_GMT, :value
+  attr_reader :id, :FGA_id, :time_stamp, :time_GMT, :value
 
   def initialize(forecast_hash)
     @id = forecast_hash["id"].to_i if forecast_hash["id"]
@@ -22,5 +23,25 @@ attr_reader :id, :FGA_id, :time_stamp, :time_GMT, :value
     else
       @id = existingForecastHash["id"].to_i
     end
+  end
+
+  def self.find(forecastGeneratedAtId)
+    sql = "SELECT * FROM forecasts WHERE FGA_id=#{forecastGeneratedAtId}"
+    forecasts = SqlRunner.run(sql)
+
+    if(forecasts != nil)
+      jsonString = ""
+      forecasts.each { |forecast| 
+        if(jsonString != "")
+          jsonString = jsonString + "," + forecast.to_json
+        else
+          jsonString = forecast.to_json
+        end
+      }
+      jsonString = "[" + jsonString + "]"
+      return jsonString
+    end
+
+    return nil
   end
 end
