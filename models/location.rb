@@ -20,4 +20,10 @@ attr_reader :id, :name
       @id = existingLocationHash["id"].to_i
     end
   end
+
+  def self.find(location)
+    sql = "SELECT * from locations WHERE name='#{location}'"
+    locationHash = SqlRunner.run(sql).first
+    return locationHash
+  end
 end
