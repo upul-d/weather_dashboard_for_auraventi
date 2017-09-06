@@ -1,5 +1,6 @@
 require_relative("../db/sql_runner")
 require 'json'
+require 'pry'
 
 class Forecast
 

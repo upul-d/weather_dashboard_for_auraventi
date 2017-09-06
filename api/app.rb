@@ -26,7 +26,7 @@ class Run
   def processForecast(location, weatherVariable)
     responseBodyJSON = Request.new().getBody(weatherVariable, location, nil)
     parsedResponseBody = JSON.parse(responseBodyJSON.to_s)
-    
+   
     writeLocation(parsedResponseBody)
     writeWeatherVariable(parsedResponseBody)
     writeForecastGeneratedAt(parsedResponseBody)
