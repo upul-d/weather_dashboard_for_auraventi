@@ -1,12 +1,11 @@
-class Request {
-  get(url, callback) {
+// could be used later - beyond the CodeClan project:
 
-    fetch(url)
-      .then(function(thing) {
-        console.log(thing)
-      })
+// class Request {
+//   get(url, callback) {
+//       fetch(url)
+//         .then((resp) => resp.json())
+//         .then(callback)
+//   }
+// }
 
-  }
-}
-
-module.exports = Request
+// module.exports = Request
