@@ -1,4 +1,5 @@
 require 'net/http'
+require 'openssl'
 
 class Request  
   def getBody(weatherVariable, location, queryParams)
@@ -11,7 +12,8 @@ class Request
     # Connects to server
     resBody = ""
     resCode = 0
-    Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
+
+    Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https', :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
       request = Net::HTTP::Get.new uri
       request['Accept'] = "application/json"
       request['Authorization'] = "Basic dXB1bDota0FHYyNjWCZkdFRYWnR1JQ=="
