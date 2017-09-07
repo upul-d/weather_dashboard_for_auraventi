@@ -14,5 +14,6 @@
     "webpack": "^2.2.1"
   },
   "dependencies": {
+    "highcharts": "^5.0.14"
   }
 }
